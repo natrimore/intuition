@@ -1,13 +1,19 @@
+import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'dart:math';
 
 import 'package:intuition/src/core/enums/cardType.dart';
 
 /// {@template counter_cubit}
-/// A [Cubit] which manages an [int] as its state.
+/// A [Cubit] which manages an [CardType] as its state.
 /// {@endtemplate}
 class CounterCubit extends Cubit<CardType> {
   Random rnd = new Random();
+
+  Timer _timer;
+
+  bool currentState = false;
 
   /// {@macro counter_cubit}
   CounterCubit() : super(null);
@@ -18,7 +24,7 @@ class CounterCubit extends Cubit<CardType> {
   var totalAttempts = 0;
 
   //1-black 0-white
-  void onTap(CardType type) {
+  void onTap(CardType type) async {
     totalAttempts++;
 
     var ans = this.generateRandomNumber();
@@ -29,14 +35,32 @@ class CounterCubit extends Cubit<CardType> {
       incorrect++;
     }
 
-    emit(type);
-
-    Future.delayed(new Duration(seconds: 1), () {
+    if (_timer != null && _timer.isActive) {
+      _timer.cancel();
+      currentState = false;
       emit(null);
+    }
+
+    //Future.delayed(Duration(milliseconds: 200), () {});
+
+    emit(CardType.values[ans]);
+    currentState = true;
+
+    _timer = Timer(Duration(milliseconds: 500), () {
+      if (currentState == true) {
+        currentState = false;
+        emit(null);
+      }
     });
   }
 
   int generateRandomNumber() {
     return rnd.nextInt(CardType.values.length);
+  }
+
+  void clearAllAttempts() {
+    totalAttempts = 0;
+    incorrect = 0;
+    correct = 0;
   }
 }

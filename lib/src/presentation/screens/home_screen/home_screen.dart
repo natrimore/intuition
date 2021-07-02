@@ -30,11 +30,16 @@ class _HomeScreenState extends State<HomeScreen> {
                         context.read<CounterCubit>().totalAttempts;
                     int incorrect = context.read<CounterCubit>().incorrect;
                     int correct = context.read<CounterCubit>().correct;
+                    DateTime initialDate =
+                        context.read<CounterCubit>().initialDate;
                     Navigator.push(
                         context,
                         MaterialPageRoute(
                             builder: (context) => StatisticsScreen.screen(
-                                totalAttepts, incorrect, correct)));
+                                totalAttepts,
+                                incorrect,
+                                correct,
+                                initialDate)));
                   } else if (newValue == 2) {
                     context.read<CounterCubit>().clearAllAttempts();
                     showInSnackBar('The data is cleared');

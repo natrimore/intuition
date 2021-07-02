@@ -15,6 +15,8 @@ class CounterCubit extends Cubit<CardType> {
 
   bool currentState = false;
 
+  DateTime initialDate;
+
   /// {@macro counter_cubit}
   CounterCubit() : super(null);
   var correct = 0;
@@ -25,6 +27,9 @@ class CounterCubit extends Cubit<CardType> {
 
   //1-black 0-white
   void onTap(CardType type) async {
+    if (totalAttempts == 0) {
+      initialDate = DateTime.now();
+    }
     totalAttempts++;
 
     var ans = this.generateRandomNumber();

@@ -1,30 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intuition/src/logic/cubit/statistics_cubit.dart';
+import 'package:get/get.dart';
+import 'package:intuition/src/presentation/screens/statistics/statistics_controller.dart';
 
-class StatisticsScreen extends StatelessWidget {
-  const StatisticsScreen(
-      {this.totalAttempts, this.incorrect, this.correct, this.initialDate});
+class StatisticsScreen extends GetView<StatisticsController> {
+  final StatisticsController controller = Get.put(StatisticsController());
 
-  static Widget screen(int totalAttempts, int incorrect, int correct,
-          DateTime initialDate) =>
-      BlocProvider(
-        create: (context) => StatisticsCubit(),
-        child: StatisticsScreen(
-          totalAttempts: totalAttempts,
-          incorrect: incorrect,
-          correct: correct,
-          initialDate: initialDate,
-        ),
-      );
-
-  final int totalAttempts;
-  final int incorrect;
-  final int correct;
-  final DateTime initialDate;
   @override
   Widget build(BuildContext context) {
-    int precentage = calculatePercentage();
     return Scaffold(
         appBar: AppBar(title: Text('Intuition')),
         body: Container(
@@ -56,7 +38,7 @@ class StatisticsScreen extends StatelessWidget {
                         Container(
                           child: Center(
                             child: Text(
-                                'Total attempts: $totalAttempts\n $precentage %',
+                                'Total attempts: ${controller.totalAttempts}\n ${controller.calculatePercentage()} %',
                                 style: TextStyle(
                                     fontSize: 22, fontWeight: FontWeight.bold)),
                           ),
@@ -74,9 +56,5 @@ class StatisticsScreen extends StatelessWidget {
             )
           ],
         )));
-  }
-
-  int calculatePercentage() {
-    return (1.0 * (correct / totalAttempts)).ceil();
   }
 }

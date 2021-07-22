@@ -8,7 +8,7 @@ import 'package:intuition/routes/app_routes.dart';
 import 'package:intuition/src/core/enums/cardType.dart';
 
 class HomeController extends GetxController {
-  var rnd = new Random();
+  var rnd = Random();
 
   Timer _timer;
 

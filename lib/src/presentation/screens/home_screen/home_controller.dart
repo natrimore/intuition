@@ -105,20 +105,6 @@ class HomeController extends GetxController {
   popupSelect(value) {
     if (value == 0) {
       goToStatistics();
-      // int totalAttepts =
-      //     context.read<CounterCubit>().totalAttempts;
-      // int incorrect = context.read<CounterCubit>().incorrect;
-      // int correct = context.read<CounterCubit>().correct;
-      // DateTime initialDate =
-      //     context.read<CounterCubit>().initialDate;
-      // Navigator.push(
-      //     context,
-      //     MaterialPageRoute(
-      //         builder: (context) => StatisticsScreen.screen(
-      //             totalAttepts,
-      //             incorrect,
-      //             correct,
-      //             initialDate)));
     } else if (value == 2) {
       clearAllAttempts();
     }

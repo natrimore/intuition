@@ -68,11 +68,7 @@ class HomeScreen extends GetView<HomeController> {
                     height: 80.0,
                     width: 80.0,
                     child: GestureDetector(
-                        onTap: () => controller.onTap(CardType.White)
-                        // context
-                        //     .read<CounterCubit>()
-                        //     .onTap(CardType.White),
-                        ),
+                        onTap: () => controller.onTap(CardType.White)),
                   ),
                   Spacer(),
                   Container(
@@ -80,11 +76,7 @@ class HomeScreen extends GetView<HomeController> {
                       height: 80.0,
                       width: 80.0,
                       child: GestureDetector(
-                          onTap: () => controller.onTap(CardType.Black))
-                      // context
-                      //     .read<CounterCubit>()
-                      //     .onTap(CardType.Black)),
-                      )
+                          onTap: () => controller.onTap(CardType.Black)))
                 ],
               )
             ],

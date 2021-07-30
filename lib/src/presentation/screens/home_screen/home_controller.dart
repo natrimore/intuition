@@ -24,6 +24,8 @@ class HomeController extends GetxController {
 
   var _totalAttempts = 0;
 
+  var buttonWidth = 0;
+
   //1-black 0-white
   void onTap(CardType type) {
     print("tapppp");

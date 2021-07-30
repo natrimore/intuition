@@ -9,11 +9,24 @@ class HomeScreen extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: Color(0xffF6F6FA),
         appBar: AppBar(
-          title: Text('Intuition'),
+          centerTitle: true,
+          backgroundColor: Color(0xffF6F6FA),
+          title: Text(
+            'Intuition',
+            style: TextStyle(
+                letterSpacing: 0.5,
+                color: Color(0xff282F38),
+                fontSize: 18,
+                fontWeight: FontWeight.w700),
+          ),
           actions: [
             PopupMenuButton(
-                icon: Icon(Icons.settings),
+                icon: Icon(
+                  Icons.settings,
+                  color: Colors.black,
+                ),
                 onSelected: (newValue) {
                   controller.popupSelect(newValue);
                 },
@@ -43,15 +56,64 @@ class HomeScreen extends GetView<HomeController> {
                 })
           ],
         ),
-        body: Container(
-          margin: EdgeInsets.fromLTRB(80, 60, 80, 150),
+        body: Padding(
+          padding: EdgeInsets.fromLTRB(20, 24, 20, 0),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
             children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  OutlinedButton(
+                      style: OutlinedButton.styleFrom(
+                        backgroundColor: Colors.white,
+                        minimumSize:
+                            Size(MediaQuery.of(context).size.width * 0.4, 50),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10)),
+                        side: BorderSide(width: 1.2, color: Color(0xff5B7ED7)),
+                      ),
+                      child: Text(
+                        "Statistics",
+                        style: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.w600,
+                            fontFamily: 'Montserrat',
+                            color: Color(0xff5B7ED7)),
+                      ),
+                      onPressed: () {}),
+                  OutlinedButton(
+                      style: OutlinedButton.styleFrom(
+                        backgroundColor: Colors.white,
+                        minimumSize:
+                            Size(MediaQuery.of(context).size.width * 0.4, 50),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10)),
+                        side: BorderSide(width: 1.2, color: Color(0xff5B7ED7)),
+                      ),
+                      child: Text(
+                        "Clear",
+                        style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                            fontFamily: 'Montserrat',
+                            color: Color(0xff5B7ED7)),
+                      ),
+                      onPressed: () {}),
+                ],
+              ),
+              SizedBox(
+                height: 24,
+              ),
               Obx(
                 () => Container(
-                    // color: Colors.black,
-                    color: controller.color.value,
+                    decoration: BoxDecoration(
+                        color: controller.color.value,
+                        border: Border.all(
+                          width: 0.5,
+                          color: Colors.grey.withOpacity(0.6),
+                        )),
+                    padding: EdgeInsets.all(4),
+                    width: MediaQuery.of(context).size.width * 0.6,
                     child: Opacity(
                         opacity: controller.color.value != Colors.transparent
                             ? 0
@@ -59,24 +121,43 @@ class HomeScreen extends GetView<HomeController> {
                         child: Image.asset('assets/shirt_corner.png'))),
               ),
               SizedBox(
-                height: 10,
+                height: 24,
               ),
               Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
-                    color: Colors.white,
-                    height: 80.0,
-                    width: 80.0,
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        boxShadow: [
+                          BoxShadow(
+                              offset: Offset(0, 8),
+                              blurRadius: 40,
+                              color: Colors.black.withOpacity(0.1))
+                        ],
+                        borderRadius: BorderRadius.circular(9)),
+                    height: 100.0,
+                    width: 100.0,
                     child: GestureDetector(
                         onTap: () => controller.onTap(CardType.White)),
                   ),
-                  Spacer(),
+                  SizedBox(
+                    width: 30,
+                  ),
                   Container(
-                      color: Colors.black,
-                      height: 80.0,
-                      width: 80.0,
+                      decoration: BoxDecoration(
+                          color: Colors.black,
+                          boxShadow: [
+                            BoxShadow(
+                                offset: Offset(0, 8),
+                                blurRadius: 40,
+                                color: Colors.black.withOpacity(0.1))
+                          ],
+                          borderRadius: BorderRadius.circular(9)),
+                      height: 100.0,
+                      width: 100.0,
                       child: GestureDetector(
-                          onTap: () => controller.onTap(CardType.Black)))
+                          onTap: () => controller.onTap(CardType.Black))),
                 ],
               )
             ],

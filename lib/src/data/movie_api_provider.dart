@@ -1,33 +1,30 @@
-import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart';
 import 'package:intuition/src/data/exceptions.dart';
 
-import '../models/item_model.dart';
-
 class MovieApiProvider {
   var client = Client();
 
-  final _apiKey = '3910f69dc92c2f9bc3bcb8204dad3e90';
+  // final _apiKey = '3910f69dc92c2f9bc3bcb8204dad3e90';
 
   BuildContext _context;
 
-  Future<ItemModel> fetchMovieList() async {
-    var responseJson;
-    print('entered');
-    try {
-      final response = await client
-          .get("https://api.themoviedb.org/3/movie/popular?api_key=$_apiKey");
+  // Future<ItemModel> fetchMovieList() async {
+  //   var responseJson;
+  //   print('entered');
+  //   try {
+  //     final response = await client
+  //         .get("https://api.themoviedb.org/3/movie/popular?api_key=$_apiKey");
 
-      var res = _response(response);
+  //     var res = _response(response);
 
-      responseJson = ItemModel.fromJson(res);
-    } on FetchDataException {
-      throw FetchDataException("No Internet connection");
-    }
-    return responseJson;
-  }
+  //     responseJson = ItemModel.fromJson(res);
+  //   } on FetchDataException {
+  //     throw FetchDataException("No Internet connection");
+  //   }
+  //   return responseJson;
+  // }
 
   void initContext(BuildContext context) {
     this._context = context;

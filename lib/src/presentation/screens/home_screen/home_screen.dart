@@ -33,24 +33,16 @@ class HomeScreen extends GetView<HomeController> {
                 itemBuilder: (context) {
                   return [
                     PopupMenuItem(
-                      child: Text("Statistics"),
+                      child: Text("Settings"),
                       value: 0,
                     ),
                     PopupMenuItem(
-                      child: Text("Settings"),
+                      child: Text("About"),
                       value: 1,
                     ),
                     PopupMenuItem(
-                      child: Text("Clear"),
-                      value: 2,
-                    ),
-                    PopupMenuItem(
-                      child: Text("About"),
-                      value: 3,
-                    ),
-                    PopupMenuItem(
                       child: Text("Exit"),
-                      value: 4,
+                      value: 2,
                     ),
                   ];
                 })
@@ -80,7 +72,9 @@ class HomeScreen extends GetView<HomeController> {
                             fontFamily: 'Montserrat',
                             color: Color(0xff5B7ED7)),
                       ),
-                      onPressed: () {}),
+                      onPressed: () {
+                        controller.goToStatistics();
+                      }),
                   OutlinedButton(
                       style: OutlinedButton.styleFrom(
                         backgroundColor: Colors.white,
@@ -98,7 +92,9 @@ class HomeScreen extends GetView<HomeController> {
                             fontFamily: 'Montserrat',
                             color: Color(0xff5B7ED7)),
                       ),
-                      onPressed: () {}),
+                      onPressed: () {
+                        controller.clearAllAttempts();
+                      }),
                 ],
               ),
               SizedBox(
@@ -107,18 +103,44 @@ class HomeScreen extends GetView<HomeController> {
               Obx(
                 () => Container(
                     decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(7),
                         color: controller.color.value,
                         border: Border.all(
                           width: 0.5,
                           color: Colors.grey.withOpacity(0.6),
                         )),
-                    padding: EdgeInsets.all(4),
+                    // padding: EdgeInsets.all(4),
                     width: MediaQuery.of(context).size.width * 0.6,
                     child: Opacity(
                         opacity: controller.color.value != Colors.transparent
                             ? 0
                             : 1,
-                        child: Image.asset('assets/shirt_corner.png'))),
+                        child: ClipRRect(
+                          child: Container(
+                            alignment: Alignment.center,
+                            height: MediaQuery.of(context).size.height * 0.45,
+                            child: Text(
+                              "?",
+                              style: TextStyle(
+                                  fontSize: 100,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.black.withOpacity(0.4)),
+                            ),
+                            decoration: BoxDecoration(
+                              gradient: RadialGradient(
+                                center: Alignment(0, 0),
+                                colors: [
+                                  Color.fromRGBO(3, 235, 225, 100),
+                                  Color.fromRGBO(152, 180, 242, 20)
+                                ],
+                                radius: 0.7,
+                              ),
+                            ),
+                          ),
+                        )
+                        // Image.asset('assets/shirt_corner.png')
+
+                        )),
               ),
               SizedBox(
                 height: 24,

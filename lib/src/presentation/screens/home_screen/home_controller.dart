@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intuition/routes/app_routes.dart';
 import 'package:intuition/src/core/enums/cardType.dart';
+import 'package:intuition/src/data/user_data.dart';
 
 class HomeController extends GetxController {
   var rnd = Random();
@@ -29,9 +30,11 @@ class HomeController extends GetxController {
   //1-black 0-white
   void onTap(CardType type) {
     print("tapppp");
+
     if (_totalAttempts == 0) {
       _initialDate = DateTime.now();
     }
+
     _totalAttempts++;
 
     var ans = this.generateRandomNumber();
@@ -40,6 +43,10 @@ class HomeController extends GetxController {
       _correct++;
     } else {
       _incorrect++;
+    }
+
+    if (_totalAttempts % 50 == 0) {
+      saveUserData();
     }
 
     if (_timer != null && _timer.isActive) {
@@ -61,7 +68,23 @@ class HomeController extends GetxController {
     });
   }
 
+  saveUserData() async {
+    var _userData = UserData();
+
+    List<int> userResult = await _userData.getResult();
+
+    int result = calculatePercentage();
+
+    userResult.add(result);
+
+    await _userData.setResult(userResult);
+  }
+
   goToStatistics() {
+    print("total: $_totalAttempts");
+    print("c $_correct");
+    print("inc $_incorrect");
+    print("date $_initialDate");
     Get.toNamed(AppRoutes.STATISTICS_SCREEN, arguments: {
       "totalAttempts": _totalAttempts,
       "incorrect": _incorrect,
@@ -104,11 +127,17 @@ class HomeController extends GetxController {
     Get.snackbar("Intuition", "The data is cleared");
   }
 
+  int calculatePercentage() {
+    print("correct $_correct");
+    print("total attempt $_totalAttempts");
+    return (_correct * 100 / _totalAttempts).ceil();
+  }
+
   popupSelect(value) {
-    if (value == 0) {
-      goToStatistics();
-    } else if (value == 2) {
-      clearAllAttempts();
-    }
+    // if (value == 0) {
+    //   goToStatistics();
+    // } else if (value == 2) {
+    //   clearAllAttempts();
+    // }
   }
 }

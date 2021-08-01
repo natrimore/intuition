@@ -15,7 +15,7 @@ class StatisticsController extends GetxController {
     super.onInit();
 
     if (Get.arguments != null) {
-      _totalAttempts = Get.arguments['_totalAttempts'];
+      _totalAttempts = Get.arguments['totalAttempts'] ?? 1;
       _incorrect = Get.arguments['incorrect'];
       _correct = Get.arguments['correct'];
       _initialDate = Get.arguments['initialDate'];
@@ -23,6 +23,9 @@ class StatisticsController extends GetxController {
   }
 
   int calculatePercentage() {
-    return (_correct / _totalAttempts).ceil();
+    print("correct $_correct");
+    print("total attempt $_totalAttempts");
+    if (_totalAttempts == 0) return 0;
+    return (_correct * 100 / _totalAttempts).ceil();
   }
 }

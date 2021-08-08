@@ -23,7 +23,7 @@ class StatisticsScreen extends GetView<StatisticsController> {
           centerTitle: true,
           backgroundColor: Color(0xffF6F6FA),
           title: Text(
-            'Intuition',
+            'Statistics',
             style: TextStyle(
                 letterSpacing: 0.5,
                 color: Color(0xff282F38),
@@ -31,97 +31,64 @@ class StatisticsScreen extends GetView<StatisticsController> {
                 fontWeight: FontWeight.w700),
           ),
         ),
-        body: Container(
-            child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+        body: ListView(
+          shrinkWrap: true,
           children: [
+            const SizedBox(
+              height: 28.0,
+            ),
+            Center(
+              child: GetBuilder<StatisticsController>(
+                builder: (_) => Text(
+                    'Today Total attempts: ${controller.totalAttempts}\n ${controller.calculatePercentage()} %',
+                    style:
+                        TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
+              ),
+            ),
             const SizedBox(
               height: 20.0,
             ),
-            DefaultTabController(
-              length: 2,
-              initialIndex: 0,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Container(
-                    child: TabBar(
-                      labelColor: Colors.green,
-                      unselectedLabelColor: Colors.black,
-                      tabs: [Tab(text: 'Statistics'), Tab(text: 'Graphics')],
-                    ),
-                  ),
-                  Container(
-                      height: 400,
-                      decoration: BoxDecoration(
-                          border: Border(
-                              top: BorderSide(color: Colors.grey, width: 0.5))),
-                      child: TabBarView(children: <Widget>[
-                        Container(
-                          child: Center(
-                            child: mainScreen(context),
-                            // child: Text(
-                            //     'Total attempts: ${controller.totalAttempts}\n ${controller.calculatePercentage()} %',
-                            //     style: TextStyle(
-                            //         fontSize: 22, fontWeight: FontWeight.bold)),
-                          ),
-                        ),
-                        Container(
-                          child: Center(
-                            child: Text('Display Tab 2',
-                                style: TextStyle(
-                                    fontSize: 22, fontWeight: FontWeight.bold)),
-                          ),
-                        ),
-                      ])),
-                ],
-              ),
+            GetBuilder<StatisticsController>(
+              builder: (_) => graphic(context),
             )
           ],
-        )));
+        ));
   }
 
-  mainScreen(context) {
+  graphic(context) {
     List<charts.Series<StatisticsModel, String>> _createSampleData() {
-      final data = [
-        StatisticsModel(100, 50),
-        StatisticsModel(120, 71),
-        StatisticsModel(80, 39),
-        StatisticsModel(10, 10),
-        StatisticsModel(50, 42),
-      ];
-
       return [
-        new charts.Series<StatisticsModel, String>(
-          displayName: "Statistics",
-          id: 'statistics',
-          colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
-          domainFn: (StatisticsModel sales, _) => sales.totalAttempt.toString(),
-          measureFn: (StatisticsModel sales, _) => sales.percentage,
-          data: data,
-        )
+        charts.Series<StatisticsModel, String>(
+            id: 'Sales',
+            colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
+            domainFn: (StatisticsModel sales, _) =>
+                sales.totalAttempt.toString(),
+            measureFn: (StatisticsModel sales, _) => sales.percentage,
+            data: controller.data,
+            labelAccessorFn: (StatisticsModel sales, _) =>
+                '${sales.percentage.toString()}')
       ];
     }
 
-    return Container(
-      height: 360,
-      width: MediaQuery.of(context).size.width,
-      child: Card(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: <Widget>[
-              Text(
-                "Total : 32000",
-              ),
-              Expanded(
-                child: SimpleBarChart(
-                    _createSampleData(), "Percentage", "Total Attempts"),
-              )
-            ],
+    if (controller.showGraph)
+      return Container(
+        height: 360,
+        width: MediaQuery.of(context).size.width,
+        child: Card(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: <Widget>[
+                Expanded(
+                  child: SimpleBarChart(
+                    _createSampleData(),
+                  ),
+                )
+              ],
+            ),
           ),
         ),
-      ),
-    );
+      );
+    return Container();
   }
 }

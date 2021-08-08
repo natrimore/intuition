@@ -27,6 +27,8 @@ class HomeController extends GetxController {
 
   var buttonWidth = 0;
 
+  var _userData = UserData();
+
   //1-black 0-white
   void onTap(CardType type) {
     print("tapppp");
@@ -69,8 +71,6 @@ class HomeController extends GetxController {
   }
 
   saveUserData() async {
-    var _userData = UserData();
-
     List<int> userResult = await _userData.getResult();
 
     int result = calculatePercentage();
@@ -85,6 +85,7 @@ class HomeController extends GetxController {
     print("c $_correct");
     print("inc $_incorrect");
     print("date $_initialDate");
+
     Get.toNamed(AppRoutes.STATISTICS_SCREEN, arguments: {
       "totalAttempts": _totalAttempts,
       "incorrect": _incorrect,
@@ -123,6 +124,8 @@ class HomeController extends GetxController {
     _incorrect = 0;
 
     _correct = 0;
+
+    _userData.setResult([]);
 
     Get.snackbar("Intuition", "The data is cleared");
   }

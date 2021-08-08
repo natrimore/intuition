@@ -1,7 +1,6 @@
 import 'package:get/get.dart';
 import 'package:intuition/src/data/user_data.dart';
 import 'package:intuition/src/models/statistics.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class StatisticsController extends GetxController {
   int get totalAttempts => _totalAttempts;

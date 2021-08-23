@@ -11,11 +11,11 @@ import 'package:intuition/src/data/user_data.dart';
 class HomeController extends GetxController {
   var rnd = Random();
 
-  Timer _timer;
+  Timer? _timer;
 
   var currentState = false;
 
-  DateTime _initialDate;
+  DateTime _initialDate = DateTime.now();
 
   var color = Colors.transparent.obs;
 
@@ -28,6 +28,8 @@ class HomeController extends GetxController {
   var buttonWidth = 0;
 
   var _userData = UserData();
+
+  // var _apiProvider = ApiProvider();
 
   //1-black 0-white
   void onTap(CardType type) {
@@ -51,8 +53,8 @@ class HomeController extends GetxController {
       saveUserData();
     }
 
-    if (_timer != null && _timer.isActive) {
-      _timer.cancel();
+    if (_timer != null && _timer!.isActive) {
+      _timer!.cancel();
 
       currentState = false;
     }
@@ -98,7 +100,7 @@ class HomeController extends GetxController {
     return rnd.nextInt(CardType.values.length);
   }
 
-  Color getCardColor(CardType cardType) {
+  Color getCardColor(CardType? cardType) {
     switch (cardType) {
       case CardType.Black:
         color.value = Colors.black;

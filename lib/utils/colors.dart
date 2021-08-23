@@ -15,3 +15,7 @@ const MaterialColor primary = const MaterialColor(
     900: const Color(0xff325ECD),
   },
 );
+
+class AppColors {
+  static Color grey = Colors.black.withOpacity(0.7);
+}

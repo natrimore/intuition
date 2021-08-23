@@ -43,7 +43,7 @@ class StatisticsController extends GetxController {
   getStatisticsData() async {
     var listOfData = await _userData.getResult();
 
-    if (listOfData != null && listOfData.length > 4) {
+    if (listOfData.length > 4) {
       _showGraph = true;
 
       print("percentage: $listOfData");

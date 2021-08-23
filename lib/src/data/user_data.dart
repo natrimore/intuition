@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class UserData {
   final String userResult = "USER_RESULT_LIST";
+  final String userToken = "USER_TOKEN";
 
   Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
@@ -29,5 +30,19 @@ class UserData {
     print("asdasd ${list.toString()}");
 
     return list;
+  }
+
+  Future<void> setToken(String token) async {
+    final SharedPreferences prefs = await _prefs;
+
+    await prefs.setString(userResult, userToken);
+  }
+
+  Future<String> getToken() async {
+    final SharedPreferences prefs = await _prefs;
+
+    var userToken = prefs.getString(userResult) ?? "";
+
+    return userToken;
   }
 }

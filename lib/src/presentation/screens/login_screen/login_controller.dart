@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intuition/src/data/api_provider.dart';
 import 'package:intuition/src/data/user_data.dart';
 import 'package:intuition/src/presentation/screens/home_screen/home_screen.dart';
+import 'package:intuition/utils/frequent_widgets.dart';
 
 class LoginController extends GetxController {
   var _userData = UserData();
@@ -15,24 +17,27 @@ class LoginController extends GetxController {
 
   var loading = false.obs;
 
-  var isError = false.obs;
-
   var errorText = "".obs;
 
   onSubmit() async {
     if (passwordController.text == "" || usernameController.text == "") {
-      errorText.value = "Please fill all blanks";
+      showInSnackBar("Please fill all blanks");
 
-      isError(true);
+      return;
+    }
+    if (usernameController.text.length < 4) {
+      showInSnackBar("Username length should be at least 4 letters");
+
       return;
     }
     if (passwordController.text.length < 5) {
-      errorText.value = "at least 6 letters";
+      showInSnackBar("Password length should be at least 6 letters");
 
-      isError.value = true;
       return;
     }
-    isError(false);
+
+    errorText.value = "";
+
     try {
       loading.value = true;
 
@@ -45,7 +50,9 @@ class LoginController extends GetxController {
 
       Get.offAll(HomeScreen());
     } catch (ex) {
-      print("exception");
+      loading.value = false;
+      showInSnackBar(ex.toString());
+      print("exception $ex");
     }
   }
 }

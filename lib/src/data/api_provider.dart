@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:http/http.dart';
 import 'package:intuition/src/data/exceptions.dart';
 import 'package:intuition/src/data/user_data.dart';
@@ -8,12 +9,24 @@ import 'package:intuition/src/models/user_register_response.dart';
 class ApiProvider {
   var client = Client();
 
-  var baseUrl = "http://193.168.3.60:8020";
+  var baseUrl = "http://193.168.3.60:8020/";
 
   String username = "";
 
+  String token = "";
+
   String password = "";
   // late BuildContext _context;
+  Map<String, String> baseHeader(token) => {
+        HttpHeaders.authorizationHeader: "Bearer $token",
+        HttpHeaders.contentTypeHeader: 'application/json; charset=UTF-8'
+      };
+
+  static Future<String> getAuth() async {
+    String token = await UserData().getToken();
+    String basicAuth = 'Bearer $token';
+    return basicAuth;
+  }
 
   Future<UserRegisterResponse> createUser(
       String username, String password) async {
@@ -23,13 +36,16 @@ class ApiProvider {
     this.password = password;
 
     Map<String, dynamic> bodyJson = {
-      "userName": username,
+      "userName": "998$username",
       "password": password
     };
 
     try {
-      final response =
-          await client.post(uriParser("api/users"), body: jsonEncode(bodyJson));
+      final response = await client.post(uriParser("api/users"),
+          body: jsonEncode(bodyJson), headers: baseHeader(""));
+
+      print(
+          "phone: $username, password: $password, response: ${response.statusCode} ${response.body}");
 
       var res = _response(response);
 
@@ -44,18 +60,23 @@ class ApiProvider {
   Future<UserTokenResponse> userLogin(String username, String password) async {
     var responseJson;
     Map<String, dynamic> bodyJson = {
-      "userName": username,
+      "userName": "998$username",
       "password": password
     };
     try {
+      print("phone: $username, password: $password");
       final response = await client.post(uriParser("api/auth/token"),
-          body: jsonEncode(bodyJson));
+          body: jsonEncode(bodyJson), headers: baseHeader(""));
 
+      print("data come: ${response.statusCode}");
       var res = _response(response);
+
+      print(res);
 
       responseJson = UserTokenResponse.fromJson(res);
       UserData().setToken(responseJson?.authToken);
-    } on FetchDataException {
+    } catch (ex) {
+      print(ex);
       throw FetchDataException("No Internet connection");
     }
     return responseJson;
@@ -83,7 +104,8 @@ class ApiProvider {
   // }
 
   uriParser(String url) {
-    return Uri.parse(url);
+    print(baseUrl + url);
+    return Uri.parse(baseUrl + url);
   }
 
   dynamic _response(Response response) {
@@ -93,6 +115,10 @@ class ApiProvider {
         print(responseJson);
         return responseJson;
       case 201:
+        var responseJson = json.decode(response.body.toString());
+        print(responseJson);
+        return responseJson;
+      case 204:
         var responseJson = json.decode(response.body.toString());
         print(responseJson);
         return responseJson;

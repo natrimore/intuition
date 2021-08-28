@@ -1,59 +1,57 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intuition/src/data/api_provider.dart';
 import 'package:intuition/src/presentation/screens/home_screen/home_screen.dart';
+import 'package:intuition/utils/frequent_widgets.dart';
 
 class UserRegisterController extends GetxController {
   var _apiProvider = ApiProvider();
 
-  var _username = "".obs;
+  var usernameController = TextEditingController();
 
-  var _password = "".obs;
+  var passwordController = TextEditingController();
 
-  var _confirmPassword = "".obs;
+  var confirmController = TextEditingController();
 
   var loading = false.obs;
-
-  var isError = false.obs;
 
   var errorText = "".obs;
 
   onSubmit() async {
-    if (_password.value == "" ||
-        _username.value == "" ||
-        _confirmPassword.value == "") {
-      errorText.value = "Please fill all blanks";
-
-      isError(true);
+    if (usernameController.text == "" ||
+        passwordController.text == "" ||
+        confirmController.text == "") {
+      showInSnackBar("Please fill all blanks");
       return;
     }
 
-    if (_password.value.length < 5) {
-      errorText.value = "at least 6 letters";
-
-      isError.value = true;
+    if (usernameController.text.length < 4) {
+      showInSnackBar("Username length should be at least 4 letters");
       return;
     }
-
-    if (_password.value != _confirmPassword.value) {
-      errorText.value = "Passwords don't match";
-
-      isError.value = true;
+    if (passwordController.text.length < 5) {
+      showInSnackBar("Password length should be at least 6 letters");
       return;
     }
-
-    isError(false);
+    if (passwordController.text != confirmController.text) {
+      showInSnackBar("Passwords don't match");
+      return;
+    }
 
     try {
       loading.value = true;
 
-      var value =
-          await _apiProvider.createUser(_username.value, _password.value);
+      var value = await _apiProvider.createUser(
+          usernameController.text, passwordController.text);
 
       loading.value = false;
 
       Get.offAll(HomeScreen());
     } catch (ex) {
-      print("exception");
+      loading.value = false;
+      showInSnackBar(ex.toString());
+      print("exception $ex");
     }
   }
 }

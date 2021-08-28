@@ -10,19 +10,19 @@ class CustomButton extends StatelessWidget {
       : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            boxShadow: [
-              BoxShadow(
-                  offset: Offset(7, 10), blurRadius: 10, color: AppColors.grey)
-            ]),
-        child: Text(
-          buttonTitle,
-          style: TextStyle(color: Colors.white),
-        ),
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        fixedSize: Size(MediaQuery.of(context).size.width * 0.8, 52),
+        primary: AppColors.primaryColor,
+        elevation: 10,
+        shadowColor: Colors.black,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
+      ),
+      onPressed: onTap,
+      child: Text(
+        buttonTitle,
+        style: TextStyle(
+            color: Colors.white, fontSize: 17, fontWeight: FontWeight.w500),
       ),
     );
   }

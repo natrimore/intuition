@@ -72,9 +72,10 @@ class ApiProvider {
       var res = _response(response);
 
       print(res);
-
-      responseJson = UserTokenResponse.fromJson(res);
-      UserData().setToken(responseJson?.authToken);
+      if (response.statusCode == 200) {
+        responseJson = UserTokenResponse.fromJson(res);
+        UserData().setToken(responseJson?.authToken);
+      }
     } catch (ex) {
       print(ex);
       throw FetchDataException("No Internet connection");
@@ -82,17 +83,22 @@ class ApiProvider {
     return responseJson;
   }
 
-  Future<int> userRecord(int totalAttempt, int success) async {
+  Future<int> userRecord(
+      int totalAttempt, int success, String userToken) async {
     var responseJson;
+
     String data = "${DateTime.now()} | $totalAttempt | $success";
+
     Map<String, dynamic> bodyJson = {
       "data": data,
     };
     try {
       final response = await client.post(uriParser("api/records"),
-          body: jsonEncode(bodyJson));
+          body: jsonEncode(bodyJson), headers: baseHeader(userToken));
 
       responseJson = response.statusCode;
+      print(response.body.toString());
+      print(responseJson);
     } on FetchDataException {
       throw FetchDataException("No Internet connection");
     }

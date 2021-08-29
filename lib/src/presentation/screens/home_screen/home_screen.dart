@@ -32,10 +32,10 @@ class HomeScreen extends GetView<HomeController> {
                 },
                 itemBuilder: (context) {
                   return [
-                    PopupMenuItem(
-                      child: Text("Settings"),
-                      value: 0,
-                    ),
+                    // PopupMenuItem(
+                    //   child: Text("Settings"),
+                    //   value: 0,
+                    // ),
                     PopupMenuItem(
                       child: Text("About"),
                       value: 1,
@@ -150,7 +150,7 @@ class HomeScreen extends GetView<HomeController> {
                 children: [
                   Container(
                     decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: Colors.red,
                         boxShadow: [
                           BoxShadow(
                               offset: Offset(0, 8),
@@ -161,14 +161,14 @@ class HomeScreen extends GetView<HomeController> {
                     height: 100.0,
                     width: 100.0,
                     child: GestureDetector(
-                        onTap: () => controller.onTap(CardType.White)),
+                        onTap: () => controller.onTap(CardType.Red)),
                   ),
                   SizedBox(
                     width: 30,
                   ),
                   Container(
                       decoration: BoxDecoration(
-                          color: Colors.black,
+                          color: Colors.blue,
                           boxShadow: [
                             BoxShadow(
                                 offset: Offset(0, 8),
@@ -179,7 +179,7 @@ class HomeScreen extends GetView<HomeController> {
                       height: 100.0,
                       width: 100.0,
                       child: GestureDetector(
-                          onTap: () => controller.onTap(CardType.Black))),
+                          onTap: () => controller.onTap(CardType.Blue))),
                 ],
               )
             ],

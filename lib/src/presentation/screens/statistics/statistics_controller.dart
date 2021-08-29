@@ -53,8 +53,6 @@ class StatisticsController extends GetxController {
         _data.add(item);
       }
       update();
-      for (var item in _data)
-        print("list data: ${item.percentage} vs ${item.totalAttempt}");
     }
   }
 

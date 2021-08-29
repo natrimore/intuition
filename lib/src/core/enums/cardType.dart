@@ -1,1 +1,1 @@
-enum CardType { White, Black }
+enum CardType { Red, Blue }

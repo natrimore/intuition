@@ -3,6 +3,7 @@ import 'package:intuition/src/presentation/screens/home_screen/home_screen.dart'
 import 'package:intuition/src/presentation/screens/login_screen/login_screen.dart';
 import 'package:intuition/src/presentation/screens/registration/register_screen.dart';
 import 'package:intuition/src/presentation/screens/statistics/statistics_screen.dart';
+import 'package:intuition/src/splash.dart';
 
 import 'app_routes.dart';
 
@@ -23,6 +24,10 @@ class AppPages {
     GetPage(
       name: AppRoutes.REGISTER_SCREEN,
       page: () => RegisterScreen(),
+    ),
+    GetPage(
+      name: AppRoutes.SPLASH_SCREEN,
+      page: () => SplashScreen(),
     ),
   ];
 }

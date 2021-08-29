@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intuition/routes/app_routes.dart';
 import 'package:intuition/src/core/enums/cardType.dart';
+import 'package:intuition/src/data/api_provider.dart';
 import 'package:intuition/src/data/user_data.dart';
 
 class HomeController extends GetxController {
@@ -29,7 +30,7 @@ class HomeController extends GetxController {
 
   var _userData = UserData();
 
-  // var _apiProvider = ApiProvider();
+  var _apiProvider = ApiProvider();
 
   //1-black 0-white
   void onTap(CardType type) {
@@ -77,6 +78,14 @@ class HomeController extends GetxController {
 
     int result = calculatePercentage();
 
+    try {
+      var token = await _userData.getToken();
+
+      await _apiProvider.userRecord(_totalAttempts, _correct, token);
+    } catch (ex) {
+      print("ex  $ex");
+    }
+
     userResult.add(result);
 
     await _userData.setResult(userResult);
@@ -102,13 +111,13 @@ class HomeController extends GetxController {
 
   Color getCardColor(CardType? cardType) {
     switch (cardType) {
-      case CardType.Black:
-        color.value = Colors.black;
+      case CardType.Blue:
+        color.value = Colors.blue;
 
         break;
 
-      case CardType.White:
-        color.value = Colors.white;
+      case CardType.Red:
+        color.value = Colors.red;
 
         break;
 
@@ -129,7 +138,8 @@ class HomeController extends GetxController {
 
     _userData.setResult([]);
 
-    Get.snackbar("Intuition", "The data is cleared");
+    Get.snackbar("Intuition", "The data is cleared",
+        backgroundColor: Colors.green, colorText: Colors.white);
   }
 
   int calculatePercentage() {

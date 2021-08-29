@@ -42,7 +42,7 @@ class UserRegisterController extends GetxController {
     try {
       loading.value = true;
 
-      var value = await _apiProvider.createUser(
+      await _apiProvider.createUser(
           usernameController.text, passwordController.text);
 
       loading.value = false;

@@ -8,7 +8,7 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      initialRoute: AppRoutes.LOGIN_SCREEN,
+      initialRoute: AppRoutes.SPLASH_SCREEN,
       getPages: AppPages.list,
       debugShowCheckedModeBanner: false,
       title: 'Intuition',

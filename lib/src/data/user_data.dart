@@ -35,14 +35,14 @@ class UserData {
   Future<void> setToken(String token) async {
     final SharedPreferences prefs = await _prefs;
 
-    await prefs.setString(userResult, userToken);
+    await prefs.setString(userToken, token);
   }
 
   Future<String> getToken() async {
     final SharedPreferences prefs = await _prefs;
 
-    var userToken = prefs.getString(userResult) ?? "";
+    var token = prefs.getString(userToken) ?? "";
 
-    return userToken;
+    return token;
   }
 }

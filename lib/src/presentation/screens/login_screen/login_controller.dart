@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intuition/src/data/api_provider.dart';
 import 'package:intuition/src/data/user_data.dart';
+import 'package:intuition/src/models/login_response.dart';
 import 'package:intuition/src/presentation/screens/home_screen/home_screen.dart';
 import 'package:intuition/utils/frequent_widgets.dart';
 
@@ -21,17 +22,17 @@ class LoginController extends GetxController {
 
   onSubmit() async {
     if (passwordController.text == "" || usernameController.text == "") {
-      showInSnackBar("Please fill all blanks");
+      showInSnackBar("Пожалуйста, заполните все поля");
 
       return;
     }
-    if (usernameController.text.length < 4) {
-      showInSnackBar("Username length should be at least 4 letters");
+    if (usernameController.text.length != 9) {
+      showInSnackBar("Введите правильный номер телефона");
 
       return;
     }
     if (passwordController.text.length < 5) {
-      showInSnackBar("Password length should be at least 6 letters");
+      showInSnackBar("Длина пароля должна быть не менее 6 букв.");
 
       return;
     }
@@ -44,14 +45,19 @@ class LoginController extends GetxController {
       var value = await _apiProvider.userLogin(
           usernameController.text.trim(), passwordController.text.trim());
 
-      await _userData.setToken(value.authToken);
-
       loading.value = false;
 
-      Get.offAll(HomeScreen());
+      if (value is UserTokenResponse) {
+        await _userData.setToken(value.authToken);
+
+        Get.offAll(HomeScreen());
+      } else
+        showInSnackBar("$value");
     } catch (ex) {
       loading.value = false;
+
       showInSnackBar(ex.toString());
+
       print("exception $ex");
     }
   }

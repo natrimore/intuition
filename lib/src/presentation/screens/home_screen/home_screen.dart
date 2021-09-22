@@ -14,7 +14,7 @@ class HomeScreen extends GetView<HomeController> {
           centerTitle: true,
           backgroundColor: Color(0xffF6F6FA),
           title: Text(
-            'Intuition',
+            'Интуиция',
             style: TextStyle(
                 letterSpacing: 0.5,
                 color: Color(0xff282F38),
@@ -37,12 +37,12 @@ class HomeScreen extends GetView<HomeController> {
                     //   value: 0,
                     // ),
                     PopupMenuItem(
-                      child: Text("About"),
-                      value: 1,
+                      child: Text("О нас"),
+                      value: 0,
                     ),
                     PopupMenuItem(
-                      child: Text("Exit"),
-                      value: 2,
+                      child: Text("Выйти"),
+                      value: 1,
                     ),
                   ];
                 })
@@ -65,7 +65,7 @@ class HomeScreen extends GetView<HomeController> {
                         side: BorderSide(width: 1.2, color: Color(0xff5B7ED7)),
                       ),
                       child: Text(
-                        "Statistics",
+                        "Статистика",
                         style: TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.w600,
@@ -85,7 +85,7 @@ class HomeScreen extends GetView<HomeController> {
                         side: BorderSide(width: 1.2, color: Color(0xff5B7ED7)),
                       ),
                       child: Text(
-                        "Clear",
+                        "Очистить",
                         style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w500,
@@ -94,6 +94,10 @@ class HomeScreen extends GetView<HomeController> {
                       ),
                       onPressed: () {
                         controller.clearAllAttempts();
+
+                        Get.snackbar("Интуиция", "Данные очищены",
+                            backgroundColor: Colors.green,
+                            colorText: Colors.white);
                       }),
                 ],
               ),

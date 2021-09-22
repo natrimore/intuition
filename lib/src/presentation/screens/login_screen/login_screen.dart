@@ -51,14 +51,14 @@ class LoginScreen extends GetView<LoginController> {
                         height: 16,
                       ),
                       const Text(
-                        "Sign in",
+                        "Вход",
                         style: TextStyle(
                             fontSize: 32, fontWeight: FontWeight.w600),
                       ),
                       const SizedBox(
                         height: 2,
                       ),
-                      const Text("Sign in to continue",
+                      const Text("Введите учетные данные, чтобы продолжить",
                           style: TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.w400,
@@ -68,8 +68,8 @@ class LoginScreen extends GetView<LoginController> {
                       ),
                       CustomTextField(
                         controller: controller.usernameController,
-                        title: "Number",
-                        hintText: "Your phone number",
+                        title: "Номер телефона",
+                        hintText: "Введите номер телефона",
                         prefixText: "+998  ",
                         isFocused: true,
                         formatter: [
@@ -83,8 +83,8 @@ class LoginScreen extends GetView<LoginController> {
                       ),
                       CustomTextField(
                         controller: controller.passwordController,
-                        title: "Password",
-                        hintText: "Your password",
+                        title: "Пароль",
+                        hintText: "Введите пароль",
                         obscureText: true,
                       ),
                       const SizedBox(
@@ -103,7 +103,7 @@ class LoginScreen extends GetView<LoginController> {
                       Align(
                         alignment: Alignment.center,
                         child: CustomButton(
-                          buttonTitle: "Sign in",
+                          buttonTitle: "Войти",
                           onTap: () {
                             controller.onSubmit();
                           },
@@ -118,7 +118,7 @@ class LoginScreen extends GetView<LoginController> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                "Don't have account?",
+                                "Нет аккаунта?",
                                 style: TextStyle(
                                     color: AppColors.grey, fontSize: 13),
                               ),
@@ -130,7 +130,7 @@ class LoginScreen extends GetView<LoginController> {
                                   Get.toNamed(AppRoutes.REGISTER_SCREEN);
                                 },
                                 child: Text(
-                                  "Sign Up",
+                                  "Зарегистрироваться",
                                   style: TextStyle(
                                       color: AppColors.primaryColor,
                                       fontSize: 13,

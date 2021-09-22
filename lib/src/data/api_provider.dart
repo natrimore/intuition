@@ -16,7 +16,7 @@ class ApiProvider {
   String token = "";
 
   String password = "";
-  // late BuildContext _context;
+
   Map<String, String> baseHeader(token) => {
         HttpHeaders.authorizationHeader: "Bearer $token",
         HttpHeaders.contentTypeHeader: 'application/json; charset=UTF-8'
@@ -28,8 +28,7 @@ class ApiProvider {
     return basicAuth;
   }
 
-  Future<UserRegisterResponse> createUser(
-      String username, String password) async {
+  Future<dynamic> createUser(String username, String password) async {
     var responseJson;
 
     this.username = username;
@@ -47,17 +46,22 @@ class ApiProvider {
       print(
           "phone: $username, password: $password, response: ${response.statusCode} ${response.body}");
 
+      if (response.statusCode == 400) {
+        responseJson = "Неверный пароль или номер";
+        return responseJson;
+      }
+
       var res = _response(response);
 
       responseJson = UserRegisterResponse.fromJson(res);
       await userLogin(username, password);
     } on FetchDataException {
-      throw FetchDataException("No Internet connection");
+      responseJson = "Неверный пароль или номер";
     }
     return responseJson;
   }
 
-  Future<UserTokenResponse> userLogin(String username, String password) async {
+  Future<dynamic> userLogin(String username, String password) async {
     var responseJson;
     Map<String, dynamic> bodyJson = {
       "userName": "998$username",
@@ -68,7 +72,11 @@ class ApiProvider {
       final response = await client.post(uriParser("api/auth/token"),
           body: jsonEncode(bodyJson), headers: baseHeader(""));
 
-      print("data come: ${response.statusCode}");
+      print("data come 2 : ${response.statusCode}");
+      if (response.statusCode == 400) {
+        responseJson = "Неверный пароль или номер";
+        return responseJson;
+      }
       var res = _response(response);
 
       print(res);
@@ -76,9 +84,8 @@ class ApiProvider {
         responseJson = UserTokenResponse.fromJson(res);
         UserData().setToken(responseJson?.authToken);
       }
-    } catch (ex) {
-      print(ex);
-      throw FetchDataException("No Internet connection");
+    } on FetchDataException {
+      responseJson = "Неверный пароль или номер";
     }
     return responseJson;
   }
@@ -128,11 +135,14 @@ class ApiProvider {
         var responseJson = json.decode(response.body.toString());
         print(responseJson);
         return responseJson;
-      case 400:
-        // Navigator.of(_context).pushReplacementNamed('/NotFoundPage');
-        throw BadRequestException(response.body.toString());
+      // case 400:
+      //   return "Неверный пароль или номер";
+      //   break;
+      //   // Navigator.of(_context).pushReplacementNamed('/NotFoundPage');
+      //   throw BadRequestException(response.body.toString());
       case 401:
         print("401 error");
+
         // Navigator.of(_context).pushReplacementNamed('/NotFoundPage');
         throw UnauthorisedException(response.body.toString());
       case 403:

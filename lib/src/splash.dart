@@ -10,7 +10,7 @@ class SplashScreen extends GetView<SplashController> {
     return Scaffold(
       body: Center(
         child: Text(
-          "INTUITION",
+          "ИНТУИЦИЯ",
           style: TextStyle(fontSize: 32, letterSpacing: 3),
         ),
       ),

@@ -5,7 +5,7 @@ import 'package:get/get_navigation/src/snackbar/snack.dart';
 
 void showInSnackBar(String value) {
   Get.showSnackbar(GetBar(
-    title: "Xatolik",
+    title: "Ошибка",
     message: "$value",
     icon: Icon(Icons.error, color: Colors.white),
     snackPosition: SnackPosition.TOP,

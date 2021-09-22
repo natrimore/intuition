@@ -47,14 +47,14 @@ class RegisterScreen extends GetView<UserRegisterController> {
                             height: 16,
                           ),
                           const Text(
-                            "Sign Up",
+                            "Регистрация",
                             style: TextStyle(
                                 fontSize: 32, fontWeight: FontWeight.w600),
                           ),
                           const SizedBox(
                             height: 2,
                           ),
-                          const Text("Sign up to join",
+                          const Text("Зарегистрируйтесь, чтобы присоединиться",
                               style: TextStyle(
                                   fontSize: 12,
                                   fontWeight: FontWeight.w400,
@@ -64,8 +64,8 @@ class RegisterScreen extends GetView<UserRegisterController> {
                           ),
                           CustomTextField(
                             controller: controller.usernameController,
-                            title: "Number",
-                            hintText: "Your phone number",
+                            title: "Номер телефона",
+                            hintText: "Введите номер телефона",
                             prefixText: "+998  ",
                             isFocused: true,
                             formatter: [
@@ -78,8 +78,8 @@ class RegisterScreen extends GetView<UserRegisterController> {
                           ),
                           CustomTextField(
                             controller: controller.passwordController,
-                            title: "Password",
-                            hintText: "Your password",
+                            title: "Пароль",
+                            hintText: "Введите пароль",
                             obscureText: true,
                           ),
                           const SizedBox(
@@ -87,8 +87,8 @@ class RegisterScreen extends GetView<UserRegisterController> {
                           ),
                           CustomTextField(
                             controller: controller.confirmController,
-                            title: "Confirm Password",
-                            hintText: "Confirm Your password",
+                            title: "Подтвердите пароль",
+                            hintText: "Введите пароль",
                             obscureText: true,
                           ),
                           const SizedBox(
@@ -107,7 +107,7 @@ class RegisterScreen extends GetView<UserRegisterController> {
                           Align(
                             alignment: Alignment.center,
                             child: CustomButton(
-                              buttonTitle: "Sign Up",
+                              buttonTitle: "Регистрировать",
                               onTap: () {
                                 controller.onSubmit();
                               },
@@ -122,7 +122,7 @@ class RegisterScreen extends GetView<UserRegisterController> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
-                                    "Already have account?",
+                                    "Уже есть аккаунт?",
                                     style: TextStyle(
                                         color: AppColors.grey, fontSize: 13),
                                   ),
@@ -134,7 +134,7 @@ class RegisterScreen extends GetView<UserRegisterController> {
                                       Get.back();
                                     },
                                     child: Text(
-                                      "Sign In",
+                                      "Вход",
                                       style: TextStyle(
                                           color: AppColors.primaryColor,
                                           fontSize: 13,

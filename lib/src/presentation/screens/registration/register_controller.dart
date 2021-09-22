@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intuition/src/data/api_provider.dart';
+import 'package:intuition/src/models/user_register_response.dart';
 import 'package:intuition/src/presentation/screens/home_screen/home_screen.dart';
 import 'package:intuition/utils/frequent_widgets.dart';
 
@@ -22,32 +23,35 @@ class UserRegisterController extends GetxController {
     if (usernameController.text == "" ||
         passwordController.text == "" ||
         confirmController.text == "") {
-      showInSnackBar("Please fill all blanks");
+      showInSnackBar("Пожалуйста, заполните все поля");
       return;
     }
 
-    if (usernameController.text.length < 4) {
-      showInSnackBar("Username length should be at least 4 letters");
+    if (usernameController.text.length != 9) {
+      showInSnackBar("Введите правильный номер телефона");
       return;
     }
     if (passwordController.text.length < 5) {
-      showInSnackBar("Password length should be at least 6 letters");
+      showInSnackBar("Длина пароля должна быть не менее 6 букв.");
       return;
     }
     if (passwordController.text != confirmController.text) {
-      showInSnackBar("Passwords don't match");
+      showInSnackBar("Пароли не совпадают");
       return;
     }
 
     try {
       loading.value = true;
 
-      await _apiProvider.createUser(
+      var val = await _apiProvider.createUser(
           usernameController.text, passwordController.text);
 
       loading.value = false;
 
-      Get.offAll(HomeScreen());
+      if (val is UserRegisterResponse) {
+        Get.offAll(HomeScreen());
+      } else
+        showInSnackBar("$val");
     } catch (ex) {
       loading.value = false;
       showInSnackBar(ex.toString());

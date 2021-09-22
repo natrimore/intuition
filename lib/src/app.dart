@@ -11,7 +11,7 @@ class App extends StatelessWidget {
       initialRoute: AppRoutes.SPLASH_SCREEN,
       getPages: AppPages.list,
       debugShowCheckedModeBanner: false,
-      title: 'Intuition',
+      title: 'Интуиция',
       theme: MyTheme.lightTheme,
     );
   }

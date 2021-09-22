@@ -23,7 +23,7 @@ class StatisticsScreen extends GetView<StatisticsController> {
           centerTitle: true,
           backgroundColor: Color(0xffF6F6FA),
           title: Text(
-            'Statistics',
+            'Статистика',
             style: TextStyle(
                 letterSpacing: 0.5,
                 color: Color(0xff282F38),
@@ -40,7 +40,7 @@ class StatisticsScreen extends GetView<StatisticsController> {
             Center(
               child: GetBuilder<StatisticsController>(
                 builder: (_) => Text(
-                    'Today Total attempts: ${controller.totalAttempts}\n ${controller.calculatePercentage()} %',
+                    'Сегодня Всего попыток: ${controller.totalAttempts}\n ${controller.calculatePercentage()} %',
                     style:
                         TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
               ),

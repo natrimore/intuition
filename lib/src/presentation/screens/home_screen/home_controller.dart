@@ -137,9 +137,6 @@ class HomeController extends GetxController {
     _correct = 0;
 
     _userData.setResult([]);
-
-    Get.snackbar("Intuition", "The data is cleared",
-        backgroundColor: Colors.green, colorText: Colors.white);
   }
 
   int calculatePercentage() {
@@ -149,10 +146,14 @@ class HomeController extends GetxController {
   }
 
   popupSelect(value) {
-    // if (value == 0) {
-    //   goToStatistics();
-    // } else if (value == 2) {
-    //   clearAllAttempts();
-    // }
+    if (value == 0) {
+      Get.toNamed(AppRoutes.ABOUT_SCREEN);
+    } else if (value == 1) {
+      clearAllAttempts();
+
+      _userData.setToken("");
+
+      Get.offAllNamed(AppRoutes.LOGIN_SCREEN);
+    }
   }
 }
